@@ -14,7 +14,7 @@ public class Speisekarte {
 	// nur 1 Bestand in der Anwendung -> Singleton
 
 	private Speisekarte() {
-		gerichte.add(new Speise("Pizza>", 1));
+		gerichte.add(new Speise("Pizza", 1));
 		gerichte.add(new Speise("Salat", 2));
 	}
 
