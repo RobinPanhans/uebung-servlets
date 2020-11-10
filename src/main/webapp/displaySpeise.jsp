@@ -2,6 +2,7 @@
 <%@page import="java.util.Collection"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="c:out" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,11 +11,11 @@
 </head>
 <body>
 <ul>
-<% Collection<Speise> speisen = (Collection<Speise>) request.getAttribute("sp"); 
-	for(Speise s : speisen) {
-		%><li><%=s.getName() %>, <%=s.getSpeiseID() %></li><%	
-	}
- %>
+
+	<c:forEach items="${sp}" var="s">
+		<li><c:out value="${s.name}, ${s.speiseID}"/></li>
+	</c:forEach>
+
 </ul>
 </body>
 </html>
