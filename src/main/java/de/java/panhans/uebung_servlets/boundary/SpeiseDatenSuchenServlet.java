@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +18,9 @@ import de.java.panhans.uebung_servlets.entity.Speise;
 public class SpeiseDatenSuchenServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	private Speisekarte karte;
+	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -32,14 +36,15 @@ public class SpeiseDatenSuchenServlet extends HttpServlet {
 
 			// Logik, z.B. DB-Zugriff o.Ä.
 
-			Collection<Speise> speisen = Speisekarte.getInstance().getSpeisen();
+			Collection<Speise> speisen = karte.getSpeisen();
 			Collection<Speise> suchErgebnisse = speisen.stream()
 					.filter(sp -> sp.getName().toLowerCase().contains(suchtext.toLowerCase()))
 					.collect(Collectors.toList());
 
 			// Antwort generieren in JSP, kein PrintWriter!
 			request.setAttribute("sp", suchErgebnisse);
-			request.getRequestDispatcher("/displaySpeise.jsp").forward(request, response);
+			request.setAttribute("pageTitle", "Suchergebnisse für '" + suchtext + "'");
+			request.getRequestDispatcher("/WEB-INF/displaySpeise.jsp").forward(request, response);
 		}
 
 	}
